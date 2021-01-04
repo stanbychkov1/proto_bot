@@ -1,7 +1,5 @@
 import logging
-import os
 
-import telegram
 from dotenv import load_dotenv
 from telegram import ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext, ConversationHandler
@@ -22,6 +20,7 @@ EMAIL, FULL_NAME, FEEDBACK = range(3)
 
 
 def start(update: Update, context: CallbackContext) -> int:
+    """Вступительное обращение бота"""
 
     update.message.reply_text(
         'Привет! Здесь вы можете оставить обратную связь.\n'
@@ -32,6 +31,8 @@ def start(update: Update, context: CallbackContext) -> int:
 
 
 def full_name(update: Update, context: CallbackContext) -> int:
+    """Получение имени клиента"""
+
     user = update.message.from_user
     logger.info("Name of %s: %s", user.first_name, update.message.text)
     update.message.reply_text(
@@ -43,7 +44,8 @@ def full_name(update: Update, context: CallbackContext) -> int:
 
 
 def email(update: Update, context: CallbackContext) -> int:
-    # if update.message.text
+    """Получение email клиента"""
+
     user = update.message.from_user
     logger.info("Email of %s: %s", user.first_name, update.message.text)
     update.message.reply_text(
@@ -55,6 +57,8 @@ def email(update: Update, context: CallbackContext) -> int:
 
 
 def feedback(update: Update, context: CallbackContext) -> int:
+    """Получение фидбэка от клиента"""
+
     user = update.message.from_user
     logger.info("User %s left a feedback.", user.first_name)
     update.message.reply_text(
@@ -68,6 +72,8 @@ def feedback(update: Update, context: CallbackContext) -> int:
 
 
 def cancel(update: Update, context: CallbackContext) -> int:
+    """Остановка бота"""
+
     user = update.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
     update.message.reply_text(
